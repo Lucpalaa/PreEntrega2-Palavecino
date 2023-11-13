@@ -18,11 +18,10 @@ function dividir(a, b) {
 // Funcion principal para calcular y mostrar el resultado
 function calcular(operacion) {
   // Obtener los valores de entrada
-  let numero1 = parseFloat(document.getElementById("numero1").value);
-  let numero2 = parseFloat(document.getElementById("numero2").value);
+  let numeros = document.getElementById("numeros").value.split(",").map(Number);
 
   // Verificar si las entradas son validas
-  if (isNaN(numero1) || isNaN(numero2)) {
+  if (numeros.some(isNaN)) {
     document.getElementById("resultado").innerHTML =
       "Por favor, ingrese números válidos.";
     return;
@@ -32,16 +31,16 @@ function calcular(operacion) {
   let resultado;
   switch (operacion) {
     case "suma":
-      resultado = sumar(numero1, numero2);
+      resultado = numeros.reduce((acc, num) => sumar(acc, num), 0);
       break;
     case "resta":
-      resultado = restar(numero1, numero2);
+      resultado = numeros.reduce((acc, num) => restar(acc, num));
       break;
     case "multiplicacion":
-      resultado = multiplicar(numero1, numero2);
+      resultado = numeros.reduce((acc, num) => multiplicar(acc, num), 1);
       break;
     case "division":
-      resultado = dividir(numero1, numero2);
+      resultado = numeros.reduce((acc, num) => dividir(acc, num));
       break;
     default:
       resultado = "Operación no válida";
