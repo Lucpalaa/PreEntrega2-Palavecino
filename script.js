@@ -1,17 +1,40 @@
-// Funcion para calcular y mostrar el resultado
-function calcular(operacion) {
-  // Obtener la lista de numeros
-  let numeros = document.getElementById("numeros").value.split(",").map(Number);
+// Funciones de calculo
+function sumar(a, b) {
+  return a + b;
+}
 
-  // Verificar si las entradas son validas
-  if (numeros.some(isNaN)) {
-    document.getElementById("resultado").innerHTML =
-      "Por favor, ingrese números válidos.";
-    return;
-  }
+function restar(a, b) {
+  return a - b;
+}
+
+function multiplicar(a, b) {
+  return a * b;
+}
+
+function dividir(a, b) {
+  return b !== 0 ? a / b : "Error: División por cero";
+}
+
+// Funcion para buscar un numero en un array
+function buscarNumero(array, numero) {
+  return array.includes(numero);
+}
+
+// Funcion para filtrar numeros en un array segun una condicion
+function filtrarNumeros(array, condicion) {
+  return array.filter(condicion);
+}
+
+// Funcion principal para realizar operaciones y mostrar resultados
+function calcular(operacion) {
+  // Obtener la lista de numeros desde el input y convertirla a un array de numeros
+  const numeros = document
+    .getElementById("numeros")
+    .value.split(",")
+    .map(Number);
+  let resultado;
 
   // Realizar la operacion seleccionada
-  let resultado;
   switch (operacion) {
     case "suma":
       resultado = numeros.reduce((acc, num) => acc + num, 0);
@@ -28,10 +51,24 @@ function calcular(operacion) {
         numeros[0]
       );
       break;
+    case "buscar":
+      // Solicitar al usuario un numero para buscar en la lista
+      const numeroBuscar = parseFloat(prompt("Ingrese el número a buscar:"));
+      resultado = buscarNumero(numeros, numeroBuscar)
+        ? `El número ${numeroBuscar} está presente en la lista.`
+        : `El número ${numeroBuscar} no está presente en la lista.`;
+      break;
+    case "filtrar":
+      // Solicitar al usuario una condicion para filtrar la lista
+      const condicionFiltrar = parseFloat(
+        prompt("Ingrese la condición para filtrar:")
+      );
+      resultado = filtrarNumeros(numeros, (num) => num > condicionFiltrar);
+      break;
     default:
       resultado = "Operación no válida";
   }
 
-  // Mostrar el resultado
+  // Mostrar el resultado en el elemento con el ID "resultado"
   document.getElementById("resultado").innerHTML = "Resultado: " + resultado;
 }
